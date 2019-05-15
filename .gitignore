@@ -1,0 +1,7 @@
+
+
+*.log
+**/node_modules
+.idea/
+fastlane/screenshots/**/*.png 
+package-lock.json
