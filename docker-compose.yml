@@ -1,8 +1,4 @@
 version: '3.7'
-networks:
-    default:
-        external:
-            name: bridge
 
 services:
     tests:
@@ -11,8 +7,8 @@ services:
         - selenium-hub
         - chrome
         links:
-
         - chrome
+        - selenium-hub
         build:
             context: ./
             dockerfile: ./Dockerfile
@@ -26,19 +22,23 @@ services:
         image: selenium/hub
         container_name: selenium-hub
         network_mode: bridge
+        environment:
+        - GRID_MAX_SESSION=3
+        - GRID_BROWSER_TIMEOUT=900000
+        - BROWSER_TIMEOUT=900000
         ports:
         - 4444:4444
 
-        
 
     chrome:
-        image: selenium/node-chrome
+        image: selenium/node-chrome-debug
         container_name: chrome
         depends_on:
         - selenium-hub
         links:
-        - selenium-hub
+        - selenium-hub:hub
         network_mode: bridge
         ports: 
         - 5900:5900
+
 
